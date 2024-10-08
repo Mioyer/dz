@@ -78,7 +78,7 @@ export default {
       loading: false,
       tableData: [],
       page: 1,
-      pageSize: 10,
+      pageSize: 5,
       total: 0,
     };
   },

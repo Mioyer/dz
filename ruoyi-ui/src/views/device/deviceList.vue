@@ -4,8 +4,8 @@
       <div class="title">
         <el-input
           maxlength="15"
-          style="width:300px;margin-left:20px;"
-          placeholder="搜索设备名/站点名/设备编号"
+          style="width:300px;margin-left:0px;"
+          placeholder="搜索设备名/站点名/充电桩编号"
           v-model="keyWord"
         >
           <el-button
@@ -103,7 +103,7 @@ export default {
       keyWord: "",
       tableData: [],
       page: 1,
-      pageSize: 10,
+      pageSize: 5,
       loading: true,
       total: 0,
     };

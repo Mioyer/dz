@@ -3,15 +3,15 @@
     <div class="content-box">
       <div class="title">
         <el-input
-          style="width:180px;margin-left:20px;"
-          placeholder="订单号 | 手机号 | 卡号"
+          style="width:180px;margin-left:0px;"
+          placeholder="订单号 | 手机号"
           v-model="userOrNum"
         ></el-input>
 
         <el-button
           @click="searchData"
           type="primary"
-          style="margin-left:20px;"
+          style="margin-left:0px;"
           icon="el-icon-search"
           >搜索</el-button
         >
@@ -101,18 +101,20 @@
     </div>
   </div>
 </template>
+
 <script>
-import { getOrderList } from "@/api/order";
+import { getOrderList } from '@/api/order';
 
 export default {
   data() {
     return {
       tableData: [],
-      cardNo: this.$route.query.cardNo,
+      cardNo: this.$route.query.cardNo || '',
       page: 1,
-      pageSize: 10,
+      pageSize: 5,//页面数据条数
       loading: true,
       total: 0,
+      userOrNum: ''
     };
   },
   created() {
@@ -127,16 +129,27 @@ export default {
       this.loading = true;
       let param = {
         userOrNum: this.userOrNum,
-        portCode: this.portCode,
+        portCode: this.portCode || '', // 如果有使用portCode，请确保它也有默认值或在data中定义
         cardNo: this.cardNo,
         pageNo: this.page,
         pageSize: this.pageSize,
       };
-      getOrderList(param).then((res) => {
-        if (res.message.status == 200) {
+      getOrderList(param).then(res => {
+        if (!res || res.status !== 200) {
+          console.error('Invalid response status:', res);
+          this.loading = false;
+          return;
+        }
+
+        if (res.data && res.data.records && res.data.total) {
           this.tableData = [...res.data.records];
           this.total = res.data.total;
+        } else {
+          console.error('Invalid response data format:', res);
         }
+        this.loading = false;
+      }).catch(error => {
+        console.error('Request failed:', error);
         this.loading = false;
       });
     },
@@ -144,8 +157,14 @@ export default {
       this.page = val;
       this.getDataList();
     },
-    detailHandler(row) {},
-  },
+    detailHandler(row) {
+      console.log('点击了订单详情:', row);
+      // 这里可以添加弹出详情窗口或其他处理逻辑
+    },
+  }
 };
 </script>
-<style scoped lang="scss"></style>
+
+<style scoped lang="scss">
+// 样式定义
+</style>
