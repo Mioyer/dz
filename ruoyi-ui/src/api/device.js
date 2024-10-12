@@ -1,108 +1,37 @@
 import request from '@/utils/request';
 
-// 模拟数据
-const mockChargingPileList = [
-  {
-    id: '1001',
-    pkname: '充电桩A',
-    pileType: 1, // 快充
-    plotName: '科技园区',
-    realName: '华天科技有限公司',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '200kWh'
-  },
-  {
-    id: '1002',
-    pkname: '充电桩B',
-    pileType: 0, // 慢充
-    plotName: '商业中心',
-    realName: '光大集团',
-    pileStatus: 1, // 启用
-    runningStatus: 1, // 离线
-    totalPowerConsumption: '150kWh'
-  },
-  {
-    id: '1003',
-    pkname: '充电桩C',
-    pileType: 1, // 快充
-    plotName: '工业园区',
-    realName: '东风汽车公司',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '300kWh'
-  },
-  {
-    id: '1004',
-    pkname: '充电桩D',
-    pileType: 0, // 慢充
-    plotName: '大学城',
-    realName: '北京大学',
-    pileStatus: 0, // 禁用
-    runningStatus: 1, // 离线
-    totalPowerConsumption: '120kWh'
-  },
-  {
-    id: '1005',
-    pkname: '充电桩E',
-    pileType: 1, // 快充
-    plotName: '公园广场',
-    realName: '城市绿化局',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '250kWh'
-  },
-  {
-    id: '1006',
-    pkname: '充电桩F',
-    pileType: 0, // 慢充
-    plotName: '居民小区',
-    realName: '幸福社区管理处',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '180kWh'
-  },
-  {
-    id: '1007',
-    pkname: '充电桩G',
-    pileType: 1, // 快充
-    plotName: '购物中心',
-    realName: '万达集团',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '220kWh'
-  },
-  {
-    id: '1008',
-    pkname: '充电桩H',
-    pileType: 0, // 慢充
-    plotName: '火车站',
-    realName: '铁路局',
-    pileStatus: 0, // 禁用
-    runningStatus: 1, // 离线
-    totalPowerConsumption: '110kWh'
-  },
-  {
-    id: '1009',
-    pkname: '充电桩I',
-    pileType: 1, // 快充
-    plotName: '机场',
-    realName: '国际机场管理局',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '350kWh'
-  },
-  {
-    id: '1010',
-    pkname: '充电桩J',
-    pileType: 0, // 慢充
-    plotName: '医院',
-    realName: '市立医院',
-    pileStatus: 1, // 启用
-    runningStatus: 0, // 运行
-    totalPowerConsumption: '190kWh'
+// 随机生成充电桩数据
+function generateRandomChargingPileData(num) {
+  const pileTypes = ['快充', '慢充'];
+  const plotNames = ['科技园区', '商业中心', '工业园区', '大学城', '公园广场', '居民小区', '购物中心', '火车站', '机场', '医院'];
+  const realNames = ['华天科技有限公司', '光大集团', '东风汽车公司', '北京大学', '城市绿化局', '幸福社区管理处', '万达集团', '铁路局', '国际机场管理局', '市立医院'];
+  
+  const list = [];
+  
+  for (let i = 0; i < num; i++) {
+      const id = (1001 + i).toString(); // 生成ID
+      const pileTypeIndex = Math.floor(Math.random() * 2); // 随机选择充电桩类型
+      const pileType = pileTypeIndex === 0 ? 1 : 0; // 1为快充，0为慢充
+      const pileStatus = Math.round(Math.random()); // 随机0或1（禁用或启用）
+      const runningStatus = Math.round(Math.random()); // 随机0或1（运行或离线）
+      const totalPowerConsumption = `${Math.floor(Math.random() * 300 + 100)}kWh`; // 随机生成100-400kWh的总功耗
+
+      list.push({
+          id: id,
+          pkname: `充电桩${String.fromCharCode(65 + (i % 26))}`, // 确保只生成A-J
+          pileType: pileType,
+          plotName: plotNames[Math.floor(Math.random() * plotNames.length)],
+          realName: realNames[Math.floor(Math.random() * realNames.length)],
+          pileStatus: pileStatus,
+          runningStatus: runningStatus,
+          totalPowerConsumption: totalPowerConsumption
+      });
   }
-];
+  
+  return list;
+}
+
+const mockChargingPileList = generateRandomChargingPileData(102); // 生成xx条模拟数据
 
 export function getChargingPileList(data) {
   // 模拟异步操作
@@ -125,6 +54,6 @@ export function getChargingPileList(data) {
           total: filteredList.length
         }
       });
-    }, 500); // 假设请求需要1秒的时间
+    }, 500); 
   });
 }

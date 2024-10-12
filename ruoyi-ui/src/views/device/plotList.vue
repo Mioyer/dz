@@ -78,7 +78,7 @@ export default {
       loading: false,
       tableData: [],
       page: 1,
-      pageSize: 5,
+      pageSize: 17,
       total: 0,
     };
   },
@@ -109,7 +109,15 @@ export default {
       this.page = val;
       this.getDataList();
     },
+    //rowClassName({ row }) {      
+     // return row.isGive === 0 ? 'red-row' : '';    
+    //}  
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+
+.el-table >>> .red-row {  
+  background-color: #f9ebeb; /* 红色背景 */
+}
+</style>

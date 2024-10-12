@@ -23,6 +23,7 @@
         v-loading="loading"
         border
         :data="tableData"
+        :row-class-name="rowClassName"
         style="width: 100%"
       >
         <el-table-column
@@ -87,7 +88,7 @@ export default {
       loading: true,
       total: 0,
       page: 1,
-      pageSize: 10, // 默认每页展示15条记录
+      pageSize: 17, // 默认每页展示XX条记录
       operatorId: '' // 示例中未使用，可根据需要设置
     };
   },
@@ -130,7 +131,12 @@ export default {
         this.loading = false;
       });
     },
+
+    rowClassName({ row }) {      
+      return row.isGive === 0 ? 'red-row' : '';    
+    }  
   },
+  
 };
 </script>
 
@@ -143,5 +149,9 @@ export default {
 .tipmincc {
   color: #3b99ed;
   font-size: 12px;
+}
+
+.el-table >>> .red-row {  
+  background-color: #f9ebeb; /* 红色背景 */
 }
 </style>

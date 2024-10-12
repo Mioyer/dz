@@ -20,7 +20,11 @@
       </div>
     </div>
     <div class="content-box">
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table  v-loading="loading" 
+      :data="tableData" 
+      :row-class-name="rowClassName"
+       border 
+       style="width: 100%">
         <el-table-column
           type="index"
           label="序号"
@@ -103,7 +107,7 @@ export default {
       keyWord: "",
       tableData: [],
       page: 1,
-      pageSize: 5,
+      pageSize: 17,
       loading: true,
       total: 0,
     };
@@ -165,7 +169,14 @@ export default {
       this.page = val;
       this.getDataList();
     },
+    rowClassName({ row }) {      
+      return row.runningStatus === 0 ? 'red-row' : '';    
+    }  
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style scoped>
+.el-table >>> .red-row {  
+  background-color: #f9ebeb; /* 红色背景 */
+}
+</style>

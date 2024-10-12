@@ -4,8 +4,8 @@
     <div class="content-box">
       <el-input
         maxlength="15"
-        style="width:260px;"
-        placeholder="搜索用户名\手机号"
+        style="width:300px;"
+        placeholder="搜索用户名\手机号\真实姓名"
         v-model="search"
       >
         <el-button
@@ -17,13 +17,13 @@
         >搜索</el-button>
       </el-input>
     </div>
-
     <!-- 表格 -->
     <div class="content-box">
       <el-table
         v-loading="loading"
         border
         :data="tableData"
+        :row-class-name="rowClassName"
         style="width: 100%"
       >
         <!-- 表格列定义 -->
@@ -37,9 +37,8 @@
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.state"
-              disabled
-              active-value="1"
-              inactive-value="0"
+              :active-value="1"
+              :inactive-value="0"
             ></el-switch>
           </template>
         </el-table-column>
@@ -63,7 +62,7 @@ export default {
       search: "",
       tableData: [],
       page: 1,
-      pageSize: 10,
+      pageSize: 17,
       loading: true,
       total: 0,
     };
@@ -91,6 +90,9 @@ export default {
       this.page = val;
       this.getDataList();
     },
+    rowClassName({ row }) {
+      return row.state === 0 ? 'inactive-row' : '';
+    },
   },
 };
 </script>
@@ -107,5 +109,8 @@ export default {
   margin-left: 20px;
   margin-top: 20px;
   margin-right: 10px;
+}
+.el-table>>> .inactive-row {
+  background-color: #f9ebeb; 
 }
 </style>

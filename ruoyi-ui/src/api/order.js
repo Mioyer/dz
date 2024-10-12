@@ -1,22 +1,44 @@
+function generateRandomOrderData(num) {
+    const chargeStatuses = ['完成', '进行中', '取消'];
+    const orderStates = ['已完成', '未完成', '已取消'];
+    const mobilePrefix = '138';
+    const parkIds = ['CP001', 'CP002', 'CP003', 'CP004', 'CP005', 'CP006', 'CP007', 'CP008', 'CP009', 'CP010'];
+    const portNames = ['A01', 'B02', 'C03', 'D04', 'E05', 'F06', 'G07', 'H08', 'I09', 'J10'];
+
+    const orders = [];
+    for (let i = 1; i <= num; i++) {
+        const ordernumber = `ORD${String(i).padStart(3, '0')}`;
+        const chargeStatus = chargeStatuses[Math.floor(Math.random() * chargeStatuses.length)];
+        const orderstate = orderStates[Math.floor(Math.random() * orderStates.length)];
+        const mobile = `${mobilePrefix}${String(Math.floor(Math.random() * 10000000)).padStart(7, '0')}`;
+        const parkId = parkIds[Math.floor(Math.random() * parkIds.length)];
+        const portName = portNames[Math.floor(Math.random() * portNames.length)];
+        const realHour = (Math.random() * 5).toFixed(2); // 随机生成 0 到 5 小时
+        const orderGold = (realHour * 25).toFixed(2); // 假设每小时收费25元
+        const cardNo = `CARD${String(i).padStart(3, '0')}`;
+
+        orders.push({
+            ordernumber,
+            chargeStatus,
+            orderstate,
+            mobile,
+            parkId,
+            portName,
+            realHour,
+            orderGold,
+            cardNo
+        });
+    }
+    return orders;
+}
 
 export function getOrderList(data) {
-    // 模拟数据
+    // 生成模拟数据
     const mockData = {
         status: 200,
         data: {
-            records: [
-                { ordernumber: 'ORD001', chargeStatus: '完成', orderstate: '已完成', mobile: '13800138000', parkId: 'CP001', portName: 'A01', realHour: '2', orderGold: '50', cardNo: 'CARD001' },
-                { ordernumber: 'ORD002', chargeStatus: '进行中', orderstate: '未完成', mobile: '13800138001', parkId: 'CP002', portName: 'B02', realHour: '1', orderGold: '30', cardNo: 'CARD002' },
-                { ordernumber: 'ORD003', chargeStatus: '取消', orderstate: '已取消', mobile: '13800138002', parkId: 'CP003', portName: 'C03', realHour: '0', orderGold: '0', cardNo: 'CARD003' },
-                { ordernumber: 'ORD004', chargeStatus: '完成', orderstate: '已完成', mobile: '13800138003', parkId: 'CP004', portName: 'D04', realHour: '3', orderGold: '75', cardNo: 'CARD004' },
-                { ordernumber: 'ORD005', chargeStatus: '进行中', orderstate: '未完成', mobile: '13800138004', parkId: 'CP005', portName: 'E05', realHour: '0.5', orderGold: '25', cardNo: 'CARD005' },
-                { ordernumber: 'ORD006', chargeStatus: '完成', orderstate: '已完成', mobile: '13800138005', parkId: 'CP006', portName: 'F06', realHour: '1.5', orderGold: '45', cardNo: 'CARD006' },
-                { ordernumber: 'ORD007', chargeStatus: '取消', orderstate: '已取消', mobile: '13800138006', parkId: 'CP007', portName: 'G07', realHour: '0', orderGold: '0', cardNo: 'CARD007' },
-                { ordernumber: 'ORD008', chargeStatus: '进行中', orderstate: '未完成', mobile: '13800138007', parkId: 'CP008', portName: 'H08', realHour: '0.75', orderGold: '20', cardNo: 'CARD008' },
-                { ordernumber: 'ORD009', chargeStatus: '完成', orderstate: '已完成', mobile: '13800138008', parkId: 'CP009', portName: 'I09', realHour: '2.5', orderGold: '65', cardNo: 'CARD009' },
-                { ordernumber: 'ORD010', chargeStatus: '进行中', orderstate: '未完成', mobile: '13800138009', parkId: 'CP010', portName: 'J10', realHour: '1.25', orderGold: '35', cardNo: 'CARD010' }
-            ],
-            total: 10 // 总记录数
+            records: generateRandomOrderData(102), // 生成XX条随机订单数据
+            total: 102 // 应与上方数据相同
         },
     };
 

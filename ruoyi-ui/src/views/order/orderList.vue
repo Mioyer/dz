@@ -13,8 +13,7 @@
           type="primary"
           style="margin-left:0px;"
           icon="el-icon-search"
-          >搜索</el-button
-        >
+          >搜索</el-button>
       </div>
     </div>
     <div class="content-box">
@@ -22,6 +21,7 @@
         v-loading="loading"
         border
         :data="tableData"
+        :row-class-name="rowClassName" 
         style="width: 100%"
       >
         <el-table-column
@@ -111,7 +111,7 @@ export default {
       tableData: [],
       cardNo: this.$route.query.cardNo || '',
       page: 1,
-      pageSize: 5,//页面数据条数
+      pageSize: 13,//页面数据条数
       loading: true,
       total: 0,
       userOrNum: ''
@@ -129,7 +129,7 @@ export default {
       this.loading = true;
       let param = {
         userOrNum: this.userOrNum,
-        portCode: this.portCode || '', // 如果有使用portCode，请确保它也有默认值或在data中定义
+        portCode: this.portCode || '',
         cardNo: this.cardNo,
         pageNo: this.page,
         pageSize: this.pageSize,
@@ -159,12 +159,26 @@ export default {
     },
     detailHandler(row) {
       console.log('点击了订单详情:', row);
-      // 这里可以添加弹出详情窗口或其他处理逻辑
+    },
+    // 动态设置行的类名
+    rowClassName({ row }) {
+      if (row.orderstate === '已完成') {
+        return 'completed-order';
+      } else if (row.orderstate === '未完成') {
+        return 'pending-order';
+      }
+      return '';
     },
   }
 };
 </script>
 
-<style scoped lang="scss">
-// 样式定义
+<style scoped>
+.el-table >>> .completed-order { 
+    background-color: #f0f9eb; /* 高亮颜色 */
+}
+.el-table >>> .pending-order {
+  background-color: #f9ebeb;
+}
 </style>
+
