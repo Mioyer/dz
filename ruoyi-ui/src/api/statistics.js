@@ -112,3 +112,17 @@ export function getDeviceStatistics() {
 // Generate past 15 days' dates for console logging
 const past15Days = generatePastDates(15);
 console.log(past15Days);
+
+function generateQuarterlyData() {
+  const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+  const records = quarters.map(quarter => ({
+    quarter,
+    rechargeAmount: generateRandomAmount(10000, 50000),
+    refundAmount: generateRandomAmount(1000, 5000),
+  }));
+  return { data: { records } };
+}
+
+export function getQuarterlyRechargeAndRefund() {
+  return generateQuarterlyData();
+}

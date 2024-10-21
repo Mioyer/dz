@@ -3,17 +3,19 @@
     <div class="content-box">
       <div class="title">
         <el-input
-          style="width:180px;margin-left:0px;"
+          maxlength="10"
+          style="width:260px; margin-left:0px;"
           placeholder="订单号 | 手机号"
           v-model="userOrNum"
-        ></el-input>
-
-        <el-button
-          @click="searchData"
-          type="primary"
-          style="margin-left:0px;"
-          icon="el-icon-search"
+        >
+          <el-button
+            slot="suffix"
+            @click="searchData"
+            type="primary"
+            icon="el-icon-search"
+            style="border-radius:0 4px 4px 0; margin-right:-5px"
           >搜索</el-button>
+        </el-input>
       </div>
     </div>
     <div class="content-box">
@@ -36,7 +38,6 @@
           align="center"
           min-width="90"
         ></el-table-column>
-
         <el-table-column
           prop="chargeStatus"
           label="充电状态"
@@ -178,7 +179,7 @@ export default {
     background-color: #f0f9eb; /* 高亮颜色 */
 }
 .el-table >>> .pending-order {
-  background-color: #f9ebeb;
+  background-color: #f9ebeb; /* 高亮颜色 */
 }
 </style>
 

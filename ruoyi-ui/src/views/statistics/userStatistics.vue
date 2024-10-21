@@ -1,13 +1,8 @@
 <template>
   <div class="userStatisticsMain">
     <el-scrollbar style="width:100%;height: 100%;">
-      <div
-        class="top"
-        v-loading="tabLoading"
-        element-loading-text="拼命加载中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(255, 255, 255, 1)"
-      >
+      <div class="top" v-loading="tabLoading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(255, 255, 255, 1)">
         <div class="content-box">
           <div class="topHeader">
             <div class="titleBox">
@@ -15,12 +10,7 @@
             </div>
           </div>
           <div class="content-top">
-            <div
-              class="topItem"
-              v-for="(item, index) in topInfoArray"
-              :key="index"
-              @click="openUrl(item.url)"
-            >
+            <div class="topItem" v-for="(item, index) in topInfoArray" :key="index" @click="openUrl(item.url)">
               <img :src="item.img" alt="" />
               <div class="flex-right">
                 <div class="topItemName">{{ item.name }}</div>
@@ -31,57 +21,52 @@
         </div>
       </div>
       <template v-if="isAdmin">
-        <div
-          class="chart"
-          v-loading="chartLoading"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(255, 255, 255, 1)"
-        >
+        <div class="chart" v-loading="chartLoading" element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 1)">
           <div class="content-box">
             <div class="titleBox">
               <BlockTitle :title="'销售统计'" />
             </div>
-            <div class="content" style="background-color: white; padding: 20px;">
-              <div ref="chart" style="width:100%;height: 400px;"></div>
+            <div class="content sales-charts">
+              <div class="chart-container">
+                <div class="chart-item" ref="orderChart"></div>
+              </div>
+              <div class="chart-container">
+                <div class="chart-item" ref="salesChart"></div>
+              </div>
             </div>
           </div>
         </div>
-        <div
-          class="chart"
-          v-loading="rechargeChartLoading"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(255, 255, 255, 1)"
-        >
+        <div class="chart" v-loading="rechargeChartLoading" element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 1)">
           <div class="content-box">
             <div class="titleBox">
               <BlockTitle :title="'充值与退款统计'" />
             </div>
-            <div class="content" style="background-color: white; padding: 20px;">
-              <div ref="rechargeChart" style="width:100%;height: 400px;"></div>
+            <div class="content recharge-charts">
+              <div class="chart-container left-chart-container">
+                <div class="chart-item" ref="rechargeChart"></div>
+              </div>
+              <div class="chart-container right-chart-container">
+                <div class="chart-item" ref="quarterlyChart"></div>
+              </div>
             </div>
           </div>
         </div>
-      </template>
-      <template v-if="isAdmin">
-        <div
-          class="chart"
-          v-loading="deviceChartLoading"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(255, 255, 255, 1)"
-        >
+
+        <div class="chart" v-loading="deviceChartLoading" element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 1)">
           <div class="content-box">
             <div class="titleBox">
               <BlockTitle :title="'设备统计'" />
             </div>
-            <div
-              class="content device-charts"
-              style="background-color: white; padding: 20px;"
-            >
-              <div class="chart-item" ref="deviceStatusChart"></div>
-              <div class="chart-item" ref="faultReasonChart"></div>
+            <div class="content device-charts">
+              <div class="chart-container left-chart-container">
+                <div class="chart-item" ref="deviceStatusChart"></div>
+              </div>
+              <div class="chart-container right-chart-container">
+                <div class="chart-item" ref="faultReasonChart"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -107,12 +92,12 @@ export default {
       deviceChartLoading: true,
       topInfoArray: [
         { name: "累计交易额(元)", value: "", prop: "sumSales", url: "#", img: require("../../assets/index/index_1.png") },
-        { name: "累计订单数 (个)", value: "", prop: "sumCount", url: "/orderList", img: require("../../assets/index/index_2.png") },
-        { name: "退款金额（元）", value: "", prop: "reSales", url: "/refund", img: require("../../assets/index/index_3.png") },
-        { name: "累计注册用户", value: "", prop: "userCount", url: "/registerUser", img: require("../../assets/index/index_4.png") },
+        { name: "累计订单数 (个)", value: "", prop: "sumCount", url: "/dz/orderList", img: require("../../assets/index/index_2.png") },
+        { name: "退款金额（元）", value: "", prop: "reSales", url: "#", img: require("../../assets/index/index_3.png") },
+        { name: "累计注册用户", value: "", prop: "userCount", url: "/dz/userlist", img: require("../../assets/index/index_4.png") },
         { name: "累计充值（元）", value: "", prop: "dayRecharge", url: "#", img: require("../../assets/index/index_5.png") },
-        { name: "总站点数", value: "", prop: "plotList", url: "/device/plotList", img: require("../../assets/index/index_6.png") },
-        { name: "总设备数", value: "", prop: "deviceList", url: "/device/deviceList", img: require("../../assets/index/index_7.png") },
+        { name: "总站点数", value: "", prop: "plotList", url: "/dz/plotList", img: require("../../assets/index/index_6.png") },
+        { name: "总设备数", value: "", prop: "deviceList", url: "/dz/deviceList", img: require("../../assets/index/index_7.png") },
         { name: "累计充电量(度)", value: "", prop: "totalPowerConsumption", url: "#", img: require("../../assets/index/index_8.png") },
         { name: "运行设备", value: "", prop: "onLine", url: "#", img: require("../../assets/index/index_9.png") },
         { name: "离线设备", value: "", prop: "offLine", url: "#", img: require("../../assets/index/index_10.png") },
@@ -129,7 +114,10 @@ export default {
       rechargeData: [],
       refundData: [],
       deviceStatus: {},
-      faultReasons: {}
+      faultReasons: {},
+      quarterlyXData: [],
+      quarterlyRechargeData: [],
+      quarterlyRefundData: [],
     };
   },
   created() {
@@ -196,35 +184,51 @@ export default {
         this.xData = salesDetailResponse.data.records.map(item => item.createTime); // 使用生成的日期
         this.barData = salesDetailResponse.data.records.map(item => item.orderCount);
         this.barData2 = salesDetailResponse.data.records.map(item => item.validOrderCount);
+        this.lineData3 = salesDetailResponse.data.records.map(item => item.refundOrderCount);
         this.lineData = salesDetailResponse.data.records.map(item => item.salesTotal);
         this.lineData2 = salesDetailResponse.data.records.map(item => item.refundTotal);
-        this.lineData3 = salesDetailResponse.data.records.map(item => item.refundOrderCount);
         this.chartLoading = false;
+        this.initOrderChart();
         this.initSalesChart();
       } catch (error) {
         console.error('Failed to fetch sales data:', error);
         this.chartLoading = false;
       }
     },
-    initSalesChart() {
-      if (!this.myChart) {
-        this.myChart = echarts.init(this.$refs.chart);
+    initOrderChart() {
+      if (!this.orderChart) {
+        this.orderChart = echarts.init(this.$refs.orderChart);
       }
-      const option = {
-        title: { text: '销售统计' },
+      const orderOption = {
+        title: { text: '订单统计' },
         tooltip: { trigger: 'axis' },
-        legend: { data: ['订单数', '有效订单数', '销售额', '退款额', '退款订单数'] },
+        legend: { data: ['订单数', '有效订单数', '退款订单数'] },
         xAxis: { type: 'category', data: this.xData },
         yAxis: { type: 'value' },
         series: [
           { name: '订单数', type: 'bar', data: this.barData },
           { name: '有效订单数', type: 'bar', data: this.barData2 },
-          { name: '销售额', type: 'line', data: this.lineData },
-          { name: '退款额', type: 'line', data: this.lineData2 },
           { name: '退款订单数', type: 'line', data: this.lineData3 }
         ]
       };
-      this.myChart.setOption(option);
+      this.orderChart.setOption(orderOption);
+    },
+    initSalesChart() {
+      if (!this.salesChart) {
+        this.salesChart = echarts.init(this.$refs.salesChart);
+      }
+      const salesOption = {
+        title: { text: '销售与退款统计' },
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['销售额', '退款额'] },
+        xAxis: { type: 'category', data: this.xData },
+        yAxis: { type: 'value' },
+        series: [
+          { name: '销售额', type: 'line', data: this.lineData },
+          { name: '退款额', type: 'line', data: this.lineData2 }
+        ]
+      };
+      this.salesChart.setOption(salesOption);
     },
     async getRechargeAndRefundData() {
       try {
@@ -232,12 +236,51 @@ export default {
         this.rechargeXData = response.data.records.map(item => item.date); // 使用生成的日期
         this.rechargeData = response.data.records.map(item => item.rechargeAmount);
         this.refundData = response.data.records.map(item => item.refundAmount);
+
+        // 获取过去4个季度的数据
+        const quarterlyData = await stats.getQuarterlyRechargeAndRefund();
+        this.quarterlyXData = quarterlyData.data.records.map(item => item.quarter);
+        this.quarterlyRechargeData = quarterlyData.data.records.map(item => item.rechargeAmount);
+        this.quarterlyRefundData = quarterlyData.data.records.map(item => item.refundAmount);
+
         this.rechargeChartLoading = false;
         this.initRechargeChart();
+        this.initQuarterlyChart(); // 确保调用了初始化方法
       } catch (error) {
         console.error('Failed to fetch recharge and refund data:', error);
         this.rechargeChartLoading = false;
       }
+    },
+    initQuarterlyChart() {
+      if (!this.quarterlyChart) {
+        this.quarterlyChart = echarts.init(this.$refs.quarterlyChart);
+      }
+      const option = {
+        title: { text: '年度充值统计' },
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['充值金额', '退款金额'] },
+        grid: {
+          left: '20%',  // 大幅增加左边距
+          right: '10%',
+          bottom: '10%',
+          top: '15%'
+        },
+        xAxis: { type: 'category', data: this.quarterlyXData },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            formatter: '{value}',
+            rotate: 0,
+            fontSize: 10,
+            margin: 10
+          }
+        },
+        series: [
+          { name: '充值金额', type: 'line', data: this.quarterlyRechargeData },
+          { name: '退款金额', type: 'line', data: this.quarterlyRefundData }
+        ]
+      };
+      this.quarterlyChart.setOption(option);
     },
     initRechargeChart() {
       if (!this.rechargeChart) {
@@ -303,7 +346,7 @@ export default {
         title: { text: '故障原因统计' },
         tooltip: { trigger: 'item' },
         legend: { top: '5%', left: 'center' },
-        series:         [
+        series: [
           {
             name: '故障原因',
             type: 'pie',
@@ -360,9 +403,10 @@ export default {
   }
 
   ::v-deep .el-scrollbar__view {
-    > div {
+    >div {
       margin-bottom: 20px;
     }
+
     padding: 20px;
     overflow-x: hidden;
   }
@@ -408,26 +452,49 @@ export default {
     }
   }
 
-  .userStatisticsMain {
-    .chart .content {
-      display: flex;
-      justify-content: space-between;
-
-      .chart-item {
-        width: 45%;
-      }
-    }
-  }
-
-  .device-charts {
+  .chart .content {
     display: flex;
     justify-content: space-between;
 
     .chart-item {
       width: 45%;
-      height: 400px;
-      overflow: hidden;
     }
+  }
+
+  .sales-charts,
+  .device-charts,
+  .recharge-charts {
+    display: flex;
+    justify-content: space-between;
+
+    .chart-container {
+      background-color: white;
+      padding: 20px;
+      box-sizing: border-box;
+
+      .chart-item {
+        width: 100%;
+        height: 400px;
+      }
+    }
+  }
+
+  .sales-charts .chart-container,
+  .device-charts .chart-container {
+    width: 48%; // 宽度调整到适应页面
+  }
+
+  .recharge-charts .left-chart-container {
+    width: 74%; // 左侧占3/4
+  }
+
+  .recharge-charts .right-chart-container {
+    width: 24%; // 右侧占1/4
+  }
+
+  .device-charts .left-chart-container,
+  .device-charts .right-chart-container {
+    width: 48%; // 两侧各占一半
   }
 }
 </style>
