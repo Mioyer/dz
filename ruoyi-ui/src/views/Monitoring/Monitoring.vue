@@ -1,79 +1,109 @@
 <template>
-    <div class="monitoring-page">
-      <header class="page-header">
-        <h1>实时监控</h1>
-        <p></p>
-        <h2>XXX充电站</h2>
-      </header>
-      <div class="card-container">
-        <CardComponent
-          v-for="n in 10"
-          :key="n"
-          :cardId="'11010200000124' + n"
-          :iconSrc="require('@/assets/dz1.jpg')"
-          :current="0.00"
-          :voltage="0.00"
-          :power="0"
-          :chargeTimes="0"
-          :chargeDuration="0"
-          :chargeAmount="0"
-          :statusClass="'status-' + (n % 3)"
-          :statusText="n % 3 === 0 ? '离线' : n % 3 === 1 ? '在线' : '故障'"
-        />
+  <div class="monitoring-page">
+    <header class="page-header">
+      <h1>实时监控</h1>
+      <div class="site-selector">
+        <!-- ElementUI 下拉选择站点 -->
+        <el-select v-model="selectedSite" placeholder="请选择站点" @change="onSiteChange">
+          <el-option v-for="(value, key) in siteList" :key="key" :label="key" :value="key" />
+        </el-select>
       </div>
+    </header>
+    
+    <!-- 卡片容器 -->
+    <div class="card-container">
+      <CardComponent
+        v-for="(card, index) in currentSiteData"
+        :key="card.cardId"
+        :cardId="card.cardId"
+        :iconSrc="card.iconSrc"
+        :current="card.current"
+        :voltage="card.voltage"
+        :power="card.power"
+        :chargeTimes="card.chargeTimes"
+        :chargeDuration="card.chargeDuration"
+        :chargeAmount="card.chargeAmount"
+        :statusText="card.statusText"
+        :statusClass="getStatusClass(card.statusText)"
+      />
     </div>
-  </template>
-  
-  <script>
-  import CardComponent from '@/components/CardComponent/CardComponent.vue'
-  
-  export default {
-    name: 'MonitoringPage',
-    components: {
-      CardComponent
+  </div>
+</template>
+
+<script>
+import CardComponent from '@/components/CardComponent/CardComponent.vue';
+import { siteData } from '@/api/monitor';
+
+export default {
+  name: 'MonitoringPage',
+  components: {
+    CardComponent
+  },
+  data() {
+    return {
+      selectedSite: '站点A', // 默认选中站点A
+      siteList: siteData,
+      currentSiteData: siteData['站点A'] // 当前站点的电桩数据
+    };
+  },
+  methods: {
+    onSiteChange() {
+      // 切换站点时，更新当前站点的数据
+      this.currentSiteData = this.siteList[this.selectedSite];
+    },
+    getStatusClass(statusText) {
+      // 根据电桩状态返回不同的边框颜色类
+      if (statusText === '在线') {
+        return 'status-online';
+      } else if (statusText === '故障') {
+        return 'status-error';
+      } else if (statusText === '离线') {
+        return 'status-offline';
+      }
     }
   }
-  </script>
-  
-  <style scoped>
-  .monitoring-page {
-    padding: 20px;
-  }
-  
-  .page-header {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  .page-header h1 {
-    font-size: 24px;
-    margin: 0;
-    color: #333;
-  }
-  
-  .page-header h2 {
-    font-size: 18px;
-    margin: 0;
-    color: #666;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px; /* 增加卡片之间的间距 */
-    justify-content: flex-start; /* 从左开始排列 */
-  }
-  
-  /* 状态类 */
-  .status-0 {
-    border: 2px solid red;
-  }
-  
-  .status-1 {
-    border: 2px solid green;
-  }
-  
-  .status-2 {
-    border: 2px solid orange;
-  }
-  </style>
+};
+</script>
+
+<style scoped>
+.monitoring-page {
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+.site-selector {
+  width: 200px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+/* 状态类 */
+.status-online {
+  border-color: green;
+}
+
+.status-error {
+  border-color: red;
+}
+
+.status-offline {
+  border-color: gray;
+}
+</style>

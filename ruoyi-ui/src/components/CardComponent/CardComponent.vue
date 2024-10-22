@@ -48,14 +48,16 @@
       <div class="modal" @click.stop>
         <h3>电桩编号： {{ cardId }}</h3>
         <p>更改电桩状态:</p>
-        <!-- 修改为按钮样式的下拉菜单 -->
+        
+        <!-- 使用Element UI的下拉菜单 -->
         <div class="select-container">
-          <select v-model="statusText" @change="updateStatus" class="styled-select">
-            <option value="在线">在线</option>
-            <option value="故障">故障</option>
-            <option value="离线">离线</option>
-          </select>
+          <el-select v-model="statusText" @change="updateStatus" placeholder="选择状态" class="el-select">
+            <el-option label="在线" value="在线"></el-option>
+            <el-option label="故障" value="故障"></el-option>
+            <el-option label="离线" value="离线"></el-option>
+          </el-select>
         </div>
+
         <button class="close-button" @click="showModal = false">关闭</button>
       </div>
     </div>
@@ -99,7 +101,7 @@ export default {
   mounted() {
     this.statusClass = this.getStatusClass(this.statusText);
   }
-}
+};
 </script>
 
 <style scoped>
@@ -129,41 +131,6 @@ export default {
 
 .status-offline {
   border-color: gray;
-}
-
-/* 模态窗的下拉菜单按钮样式 */
-.select-container {
-  margin-top: 10px;
-}
-
-.styled-select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  appearance: none; /* 移除默认箭头 */
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.styled-select:hover {
-  background-color: #0056b3;
-}
-
-.styled-select:focus {
-  outline: none;
-  box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.5);
-}
-
-.styled-select::after {
-  content: '▼'; /* 模拟下拉箭头 */
-  position: absolute;
-  right: 10px;
-  top: calc(50% - 8px);
 }
 
 .card-header {
@@ -276,5 +243,9 @@ export default {
 
 .close-button:hover {
   background-color: #0056b3;
+}
+
+.el-select {
+  width: 100%;
 }
 </style>
