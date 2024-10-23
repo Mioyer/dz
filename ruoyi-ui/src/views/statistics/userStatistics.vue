@@ -99,8 +99,8 @@ export default {
         { name: "总站点数", value: "", prop: "plotList", url: "/dz/plotList", img: require("../../assets/index/index_6.png") },
         { name: "总设备数", value: "", prop: "deviceList", url: "/dz/deviceList", img: require("../../assets/index/index_7.png") },
         { name: "累计充电量(度)", value: "", prop: "totalPowerConsumption", url: "#", img: require("../../assets/index/index_8.png") },
-        { name: "运行设备", value: "", prop: "onLine", url: "#", img: require("../../assets/index/index_9.png") },
-        { name: "离线设备", value: "", prop: "offLine", url: "#", img: require("../../assets/index/index_10.png") },
+        { name: "运行设备", value: "", prop: "onLine", url: "/dz/Monitoring", img: require("../../assets/index/index_9.png") },
+        { name: "离线设备", value: "", prop: "offLine", url: "/dz/Monitoring", img: require("../../assets/index/index_10.png") },
       ],
       isAdmin: true, // 根据实际情况设置
       myChart: null,
